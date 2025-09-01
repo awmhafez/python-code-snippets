@@ -93,20 +93,28 @@ class SpotifyWebScraper:
     def _extract_track_info(self, track_data: Dict) -> Optional[Dict]:
         """Extract relevant track information from Spotify's response."""
         try:
+            # The actual structure has the track data nested under 'data'
+            if 'data' in track_data:
+                actual_track = track_data['data']
+            else:
+                actual_track = track_data
+            
             track_info = {
-                'name': track_data.get('name', 'Unknown'),
-                'uri': track_data.get('uri', ''),
-                'external_urls': track_data.get('external_urls', {}),
-                'preview_url': track_data.get('preview_url'),
-                'duration_ms': track_data.get('duration_ms', 0),
-                'explicit': track_data.get('explicit', False),
-                'popularity': track_data.get('popularity', 0),
+                'name': actual_track.get('name', 'Unknown'),
+                'id': actual_track.get('id', ''),
+                'uri': f"spotify:track:{actual_track.get('id', '')}" if actual_track.get('id') else '',
+                'external_urls': {'spotify': f"https://open.spotify.com/track/{actual_track.get('id', '')}"} if actual_track.get('id') else {},
+                'preview_url': actual_track.get('preview_url'),
+                'duration_ms': actual_track.get('duration', {}).get('totalMilliseconds', 0),
+                'explicit': actual_track.get('contentRating', {}).get('label') != 'NONE',
+                'popularity': actual_track.get('popularity', 0),
+                'playable': actual_track.get('playability', {}).get('playable', True),
             }
             
             # Extract artist information
             artists = []
-            if 'artists' in track_data and 'items' in track_data['artists']:
-                for artist in track_data['artists']['items']:
+            if 'artists' in actual_track and 'items' in actual_track['artists']:
+                for artist in actual_track['artists']['items']:
                     artists.append({
                         'name': artist.get('profile', {}).get('name', 'Unknown Artist'),
                         'uri': artist.get('uri', ''),
@@ -115,11 +123,12 @@ class SpotifyWebScraper:
             track_info['artist_names'] = [a['name'] for a in artists]
             
             # Extract album information
-            if 'albumOfTrack' in track_data:
-                album = track_data['albumOfTrack']
+            if 'albumOfTrack' in actual_track:
+                album = actual_track['albumOfTrack']
                 track_info['album'] = {
                     'name': album.get('name', 'Unknown Album'),
                     'uri': album.get('uri', ''),
+                    'id': album.get('id', ''),
                     'release_date': album.get('date', {}).get('year'),
                 }
                 
