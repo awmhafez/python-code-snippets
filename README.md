@@ -1,10 +1,14 @@
 # Python Code Snippets
 
-A collection of Python code snippets for various programming tasks and examples.
+A collection of useful Python utilities, tools, and examples for various programming tasks.
 
-## 🎵 Spotify Playlist Tools
+## ✨ Featured Tools
 
-The main feature of this repository is a comprehensive set of Spotify tools that can create playlists without requiring a Spotify app!
+This repository contains several practical Python utilities:
+
+- **🎵 Spotify Tools** - Create and manage playlists without app registration
+- **🕰️ Life Visualization** - Interactive life timeline showing weeks as dots
+- **📊 Data Processing** - Algorithms and data structure examples
 
 ### Quick Start
 
@@ -62,11 +66,13 @@ scraper.export_to_csv(tracks, "results.csv")
 
 ## 📁 Project Structure
 
-- **`utilities/`** - Core Spotify tools and other utilities
-  - `life_weeks_visualizer.py` - Pygame-based life visualization tool
-- **`examples/`** - Ready-to-run example scripts
-- **`algorithms/`** - Algorithm implementations (empty - ready for your code)
-- **`data_structures/`** - Data structure examples (empty - ready for your code)
+- **`utilities/`** - Reusable Python utilities and tools
+  - `spotify_token_scraper.py` - Create Spotify playlists without app registration
+  - `spotify_web_scraper.py` - Search Spotify tracks without authentication
+  - `life_weeks_visualizer.py` - Interactive life timeline visualization
+- **`examples/`** - Ready-to-run example scripts and demos
+- **`algorithms/`** - Algorithm implementations and examples
+- **`data_structures/`** - Data structure examples and utilities
 
 ## 🛠 Dependencies
 
@@ -74,15 +80,33 @@ scraper.export_to_csv(tracks, "results.csv")
 - `spotipy` - Official Spotify library (for reference examples)
 - `pygame` - Game development library for visualization tools
 
-## 🎯 Featured Success Story
+## 🚀 Quick Start Examples
 
-Successfully created a **90s/2000s Eurodance Classics** playlist with 43 out of 45 tracks including:
-- Technotronic - Pump Up the Jam
-- Paradisio - Bailando  
-- Darude - Sandstorm
-- Daft Punk - Around the World
-- And many more classics!
+### Life Weeks Visualizer
+```python
+from utilities.life_weeks_visualizer import LifeWeeksVisualizer
+
+visualizer = LifeWeeksVisualizer(
+    birth_year=1990, birth_month=1, birth_day=1,
+    target_age=85, name="My Life in Weeks"
+)
+visualizer.run()
+```
+
+### Spotify Playlist Creation
+```python
+from utilities.spotify_token_scraper import SpotifyTokenScraper
+
+scraper = SpotifyTokenScraper("your_bearer_token")
+songs = [("Song Title", "Artist Name")]
+result = scraper.create_playlist_from_songs(songs, "My Playlist")
+```
 
 ## 🤝 Contributing
 
-Feel free to add your own code snippets and utilities to any folder. This repository is designed to grow with useful Python code examples.
+Contributions welcome! This repository is designed to be a growing collection of useful Python utilities and examples. Feel free to:
+
+- Add new utilities to the `utilities/` folder
+- Contribute algorithm implementations
+- Share example scripts and demos
+- Improve existing code and documentation
