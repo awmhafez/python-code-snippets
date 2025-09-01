@@ -62,7 +62,8 @@ scraper.export_to_csv(tracks, "results.csv")
 
 ## 📁 Project Structure
 
-- **`utilities/`** - Core Spotify tools and utilities
+- **`utilities/`** - Core Spotify tools and other utilities
+  - `life_weeks_visualizer.py` - Pygame-based life visualization tool
 - **`examples/`** - Ready-to-run example scripts
 - **`algorithms/`** - Algorithm implementations (empty - ready for your code)
 - **`data_structures/`** - Data structure examples (empty - ready for your code)
@@ -71,6 +72,7 @@ scraper.export_to_csv(tracks, "results.csv")
 
 - `requests` - HTTP requests for Spotify API calls
 - `spotipy` - Official Spotify library (for reference examples)
+- `pygame` - Game development library for visualization tools
 
 ## 🎯 Featured Success Story
 

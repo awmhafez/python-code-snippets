@@ -1,6 +1,6 @@
-# Spotify Utilities
+# Utilities
 
-Python utilities for creating and managing Spotify playlists **without requiring a Spotify app registration**.
+Python utilities for various tasks including Spotify playlist management and life visualization tools.
 
 ## 🚀 SpotifyTokenScraper - Create Real Playlists!
 
@@ -106,7 +106,43 @@ scraper.export_to_text(found_tracks, "my_tracks.txt")
 - `export_to_text(tracks, filename)` - Export to text
 - `format_track_list(tracks)` - Format for display
 
-## ⚠️ Important Notes
+---
+
+## 🕰️ Life Weeks Visualizer - Visualize Your Life in Weeks
+
+A pygame-based application that visualizes a human life as a grid of weeks, showing how many weeks have passed and how many remain until a target age.
+
+### Usage
+
+```python
+from utilities.life_weeks_visualizer import LifeWeeksVisualizer
+
+# Create visualizer instance
+visualizer = LifeWeeksVisualizer(
+    birth_year=1991,
+    birth_month=1, 
+    birth_day=29,
+    target_age=82,
+    name="YOUR NAME - A LIFE IN WEEKS"
+)
+
+# Run the visualization
+visualizer.run()
+```
+
+### Features
+- 📊 **Visual grid** - Each dot represents one week of life
+- 🎯 **Current week highlighting** - Shows exactly where you are now
+- ⚙️ **Configurable** - Set your birth date, target age, and display name
+- 🎨 **Clean interface** - Minimalist pygame-based visualization
+- 📱 **Responsive layout** - Automatically calculates grid positioning
+
+### Dependencies
+- `pygame` - For the graphical interface
+
+---
+
+## ⚠️ Spotify Important Notes
 
 - **Bearer tokens expire** (usually after ~1 hour) - get fresh tokens as needed
 - **Token scraper** can create/modify playlists but tokens expire
