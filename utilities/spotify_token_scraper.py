@@ -96,7 +96,7 @@ class SpotifyTokenScraper:
                 
         except requests.exceptions.RequestException as e:
             if response.status_code == 401:
-                print("❌ Bearer token expired or invalid. Please get a fresh token.")
+                print("ERROR: Bearer token expired or invalid. Please get a fresh token.")
             else:
                 print(f"Error searching for '{search_term}': {e}")
             return []
@@ -139,7 +139,7 @@ class SpotifyTokenScraper:
             
         except requests.exceptions.RequestException as e:
             if response.status_code == 401:
-                print("❌ Bearer token expired or invalid. Please get a fresh token.")
+                print("ERROR: Bearer token expired or invalid. Please get a fresh token.")
             else:
                 print(f"Error getting playlists: {e}")
             return []
@@ -189,7 +189,7 @@ class SpotifyTokenScraper:
             
         except requests.exceptions.RequestException as e:
             if response.status_code == 401:
-                print("❌ Bearer token expired or invalid. Please get a fresh token.")
+                print("ERROR: Bearer token expired or invalid. Please get a fresh token.")
             else:
                 print(f"Error getting playlist tracks: {e}")
             return []
@@ -222,7 +222,7 @@ class SpotifyTokenScraper:
             playlist_id = data.get('id')
             
             if playlist_id:
-                print(f"✅ Created playlist: {name} (ID: {playlist_id})")
+                print(f"CREATED playlist: {name} (ID: {playlist_id})")
                 return playlist_id
             else:
                 print("❌ Failed to create playlist")
@@ -230,7 +230,7 @@ class SpotifyTokenScraper:
                 
         except requests.exceptions.RequestException as e:
             if response.status_code == 401:
-                print("❌ Bearer token expired or invalid. Please get a fresh token.")
+                print("ERROR: Bearer token expired or invalid. Please get a fresh token.")
             elif response.status_code == 403:
                 print("❌ Insufficient permissions to create playlist.")
             else:
@@ -264,12 +264,12 @@ class SpotifyTokenScraper:
                 )
                 response.raise_for_status()
             
-            print(f"✅ Added {len(track_uris)} tracks to playlist")
+            print(f"ADDED {len(track_uris)} tracks to playlist")
             return True
             
         except requests.exceptions.RequestException as e:
             if response.status_code == 401:
-                print("❌ Bearer token expired or invalid. Please get a fresh token.")
+                print("ERROR: Bearer token expired or invalid. Please get a fresh token.")
             elif response.status_code == 403:
                 print("❌ Insufficient permissions to modify playlist.")
             else:
@@ -286,7 +286,7 @@ class SpotifyTokenScraper:
             
         except requests.exceptions.RequestException as e:
             if response.status_code == 401:
-                print("❌ Bearer token expired or invalid. Please get a fresh token.")
+                print("ERROR: Bearer token expired or invalid. Please get a fresh token.")
             else:
                 print(f"Error getting user info: {e}")
             return None
@@ -374,11 +374,11 @@ class SpotifyTokenScraper:
                 best_match = self._find_best_match(song, artist, tracks)
                 if best_match:
                     found_tracks.append(best_match)
-                    print(f"✓ Found: {best_match['artist_names'][0]} - {best_match['name']}")
+                    print(f"FOUND: {best_match['artist_names'][0]} - {best_match['name']}")
                 else:
-                    print(f"✗ No good match for: {artist} - {song}")
+                    print(f"NOT FOUND: {artist} - {song}")
             else:
-                print(f"✗ No results for: {artist} - {song}")
+                print(f"NO RESULTS: {artist} - {song}")
             
             # Be respectful with requests
             time.sleep(0.3)

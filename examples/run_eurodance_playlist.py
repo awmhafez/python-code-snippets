@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create a 90s/2000s Eurodance playlist from the provided song list.
+Create a 90s/2000s Eurodance playlist using provided Bearer token.
 """
 
 import sys
@@ -28,8 +28,8 @@ def main():
         ("Mr. Vain", "Culture Beat"),
         ("What Is Love", "Haddaway"),
         ("Another Night", "Real McCoy"),
-        ("Get‑A‑Way", "Maxx"),
-        ("Eins, Zwei, Polizei", "Mo‑Do"),
+        ("Get-A-Way", "Maxx"),
+        ("Eins, Zwei, Polizei", "Mo-Do"),
         ("Be My Lover", "La Bouche"),
         ("Coco Jambo", "Mr. President"),
         ("Bellissima", "DJ Quicksilver"),
@@ -51,7 +51,7 @@ def main():
         ("Boom, Boom, Boom, Boom!!", "Vengaboys"),
         ("We're Going to Ibiza", "Vengaboys"),
         ("Better Off Alone", "Alice Deejay"),
-        ("Macarena", "Los Del Río"),
+        ("Macarena", "Los Del Rio"),
         ("Cotton Eye Joe", "Rednex"),
         ("Beautiful Life", "Ace of Base"),
         ("Push the Feeling On", "Nightcrawlers"),
@@ -62,48 +62,47 @@ def main():
         ("Real Love", "TTF")
     ]
     
-    print("🎵 90s/2000s EURODANCE PLAYLIST CREATOR")
+    print("=== 90s/2000s EURODANCE PLAYLIST CREATOR ===")
     print("=" * 50)
-    print(f"🎯 Ready to create playlist with {len(eurodance_songs)} classic tracks!")
+    print(f"Ready to create playlist with {len(eurodance_songs)} classic tracks!")
     
-    # Get Bearer token
-    bearer_token = os.getenv('SPOTIFY_BEARER_TOKEN')
+    # You need to provide a fresh Bearer token here
+    print("\nNOTE: You need to provide a fresh Bearer token.")
+    print("1. Go to https://open.spotify.com in your browser")
+    print("2. Open Developer Tools (F12)")
+    print("3. Go to Network tab")  
+    print("4. Search for something on Spotify")
+    print("5. Look for requests with 'Authorization: Bearer ...'")
+    print("6. Copy the token and update this script")
+    print()
     
-    if not bearer_token:
-        print("📝 Enter your Spotify Bearer token:")
-        print("(Get this from your browser's Network tab when logged into Spotify)")
-        bearer_token = input("Bearer token: ").strip()
-        
-        if bearer_token.startswith('Bearer '):
-            bearer_token = bearer_token[7:]  # Remove 'Bearer ' prefix if present
+    # YOU NEED TO PUT YOUR BEARER TOKEN HERE
+    bearer_token = "PUT_YOUR_FRESH_BEARER_TOKEN_HERE"
     
-    if not bearer_token:
-        print("❌ No Bearer token provided")
+    if bearer_token == "PUT_YOUR_FRESH_BEARER_TOKEN_HERE":
+        print("ERROR: Please update the script with your Bearer token!")
         return
     
     try:
         # Create scraper instance
+        print("Initializing Spotify connection...")
         scraper = SpotifyTokenScraper(bearer_token)
         
         # Test the token by getting user info
         user = scraper.get_current_user()
         if not user:
-            print("❌ Invalid or expired Bearer token")
-            print("💡 Get a fresh token from your browser's Network tab")
+            print("ERROR: Invalid or expired Bearer token")
+            print("Please get a fresh token and update the script")
             return
         
-        print(f"👋 Hello {user.get('display_name', 'User')}!")
+        print(f"Hello {user.get('display_name', 'User')}!")
         
         # Create the playlist
-        playlist_name = "🕺 90s/2000s Eurodance Classics"
-        playlist_description = """
-The ultimate collection of 90s and early 2000s eurodance hits! 
-Featuring Technotronic, Paradisio, Darude, Daft Punk, Snap!, and many more. 
-Perfect for parties, workouts, or nostalgic dance sessions! 
-🎵 Created with Python 🐍
-        """.strip()
+        playlist_name = "90s 2000s Eurodance Classics"
+        playlist_description = "The ultimate collection of 90s and early 2000s eurodance hits! Featuring Technotronic, Paradisio, Darude, Daft Punk, Snap!, and many more. Perfect for parties, workouts, or nostalgic dance sessions! Created with Python"
         
-        print(f"\n🎉 Creating playlist: {playlist_name}")
+        print(f"\nCreating playlist: {playlist_name}")
+        print("This may take a few minutes to search for all tracks...")
         
         result = scraper.create_playlist_from_songs(
             songs_and_artists=eurodance_songs,
@@ -113,39 +112,43 @@ Perfect for parties, workouts, or nostalgic dance sessions!
         )
         
         if result['success']:
-            print(f"\n🎉 SUCCESS! Your eurodance playlist is ready!")
-            print(f"🔗 {result['playlist_url']}")
-            print(f"📊 Added {result['tracks_found']}/{result['tracks_requested']} tracks")
+            print("\n" + "="*60)
+            print("SUCCESS! Your eurodance playlist is ready!")
+            print("="*60)
+            print(f"Playlist URL: {result['playlist_url']}")
+            print(f"Tracks added: {result['tracks_found']}/{result['tracks_requested']}")
             
             # Show some stats
             success_rate = (result['tracks_found'] / result['tracks_requested']) * 100
-            print(f"✨ Success rate: {success_rate:.1f}%")
+            print(f"Success rate: {success_rate:.1f}%")
             
             if result['tracks_found'] != result['tracks_requested']:
-                print(f"\n💡 {result['tracks_requested'] - result['tracks_found']} tracks couldn't be found.")
+                print(f"\nNote: {result['tracks_requested'] - result['tracks_found']} tracks couldn't be found.")
                 print("This might be due to:")
                 print("  - Different song titles/artist names on Spotify")
                 print("  - Tracks not available in your region")
                 print("  - Alternate versions or remixes")
+                
+            print("\nEnjoy your throwback playlist!")
         else:
-            print("❌ Failed to create playlist")
+            print("ERROR: Failed to create playlist")
             if 'error' in result:
                 print(f"Error: {result['error']}")
                 
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"ERROR: {e}")
         print("\nTroubleshooting tips:")
         print("- Make sure your Bearer token is valid and not expired")
         print("- Get a fresh token from your browser's Network tab")
-        print("- Check that you're logged into Spotify in your browser")
+        print("- Update the script with your fresh token")
 
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n\n👋 Playlist creation cancelled")
+        print("\n\nPlaylist creation cancelled")
     except Exception as e:
-        print(f"\n❌ Unexpected error: {e}")
+        print(f"\nUnexpected error: {e}")
         import traceback
         traceback.print_exc()
