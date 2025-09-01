@@ -67,3 +67,10 @@ venv.bak/
 # OS
 .DS_Store
 Thumbs.db
+
+# Spotify tokens and credentials
+*token*.txt
+bearer_token.txt
+spotify_token.txt
+*.token
+test_tracks.*
